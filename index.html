@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Estratégico de Marca — Dantz Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A1128;
+    --navy-deep:#070C1C;
+    --panel:#0F1A38;
+    --field:#141F42;
+    --line:#233058;
+    --blue:#3B6BFF;
+    --blue-soft:#5C82FF;
+    --ink:#F4F6FC;
+    --ink-soft:#8C96B8;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--navy);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+    position:relative;
+  }
+
+  /* subtle diagonal zigzag texture across whole page, like the brand card */
+  body::before{
+    content:"";
+    position:fixed;
+    top:0; left:0; bottom:0;
+    width:280px;
+    background:
+      linear-gradient(135deg, rgba(59,107,255,.05) 25%, transparent 25%) 0 0/70px 70px,
+      linear-gradient(225deg, rgba(59,107,255,.05) 25%, transparent 25%) 0 0/70px 70px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.6;
+  }
+
+  /* ---------- BOLT ICON ---------- */
+  .bolt{
+    display:inline-block;
+    width:22px;height:22px;
+    vertical-align:middle;
+  }
+
+  /* ---------- HEADER ---------- */
+  .cover{
+    position:relative;
+    padding:56px 24px 64px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    z-index:1;
+  }
+  .cover .bolt-big{
+    width:46px;height:46px;
+    margin-bottom:18px;
+  }
+  .cover-eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:12px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--blue-soft);
+    margin-bottom:16px;
+  }
+  .cover h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:clamp(28px,5vw,46px);
+    line-height:1.1;
+    letter-spacing:.01em;
+    margin:0 0 16px;
+  }
+  .cover p{
+    max-width:520px;
+    margin:0 auto;
+    color:var(--ink-soft);
+    font-size:15px;
+  }
+  .cover-divider{
+    width:120px;
+    height:1px;
+    background:var(--blue);
+    margin:28px auto;
+    opacity:.6;
+  }
+  .cover-meta{
+    display:flex;
+    gap:32px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .cover-meta div{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:11px;
+    letter-spacing:.12em;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+  .cover-meta strong{
+    display:block;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    font-size:14px;
+    font-weight:600;
+    text-transform:none;
+    letter-spacing:0;
+    margin-top:6px;
+  }
+
+  /* ---------- PROGRESS RAIL ---------- */
+  .progress-wrap{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(7,12,28,.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:12px 24px;
+  }
+  .progress-track{
+    max-width:760px;
+    margin:0 auto;
+    height:3px;
+    background:var(--line);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--blue), var(--blue-soft));
+    transition:width .4s ease;
+  }
+  .progress-label{
+    max-width:760px;
+    margin:8px auto 0;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:10.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- FORM SHELL ---------- */
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:48px 24px 120px;
+    position:relative;
+    z-index:1;
+  }
+
+  .section{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    margin-bottom:24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .section::before{
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    width:3px; height:100%;
+    background:var(--blue);
+    opacity:.7;
+  }
+  .section-tab{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    position:absolute;
+    top:22px;
+    right:28px;
+    color:var(--ink-soft);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:11px;
+    letter-spacing:.1em;
+  }
+  .section-tab svg{width:14px;height:14px;}
+  .section-inner{
+    padding:36px 32px 30px;
+  }
+  .section h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:22px;
+    margin:0 0 6px;
+    color:var(--ink);
+    padding-right:90px;
+  }
+  .section .section-sub{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin:0 0 26px;
+  }
+
+  .field{margin-bottom:22px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{
+    display:block;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+  .field .hint{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:-4px 0 8px;
+  }
+
+  input[type=text], textarea{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:11px 13px;
+    resize:vertical;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  textarea{min-height:86px;}
+  input[type=text]:focus, textarea:focus{
+    outline:none;
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(59,107,255,.2);
+  }
+  input[type=text]::placeholder, textarea::placeholder{color:#5B678C;}
+
+  /* choice chips */
+  .choices{display:flex; flex-wrap:wrap; gap:8px;}
+  .choice{position:relative;}
+  .choice input{
+    position:absolute; opacity:0; width:100%; height:100%; top:0; left:0; margin:0; cursor:pointer;
+  }
+  .choice span{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:9px 16px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    font-size:13.5px;
+    color:var(--ink);
+    background:var(--field);
+    transition:all .15s ease;
+  }
+  .choice input:checked + span{
+    background:var(--blue);
+    border-color:var(--blue);
+    color:#fff;
+  }
+  .choice input:focus-visible + span{
+    box-shadow:0 0 0 3px rgba(59,107,255,.35);
+  }
+
+  .other-input{margin-top:10px; display:none;}
+  .other-input.show{display:block;}
+
+  /* ---------- SUBMIT ---------- */
+  .finish{
+    background:var(--navy-deep);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:44px 32px;
+    text-align:center;
+    margin-top:8px;
+  }
+  .finish .bolt{width:30px;height:30px; margin-bottom:14px;}
+  .finish h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:24px;
+    font-weight:600;
+    margin:0 0 10px;
+  }
+  .finish p{
+    color:var(--ink-soft);
+    font-size:14px;
+    max-width:440px;
+    margin:0 auto 26px;
+  }
+  .btn-row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+  button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    border:none;
+    border-radius:24px;
+    padding:14px 30px;
+    cursor:pointer;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  button:active{transform:scale(.97);}
+  .btn-primary{background:var(--blue); color:#fff;}
+  .btn-primary:hover{background:var(--blue-soft);}
+  .btn-secondary{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-secondary:hover{border-color:var(--blue);}
+
+  .status-msg{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:11.5px;
+    color:var(--blue-soft);
+    margin-top:18px;
+    letter-spacing:.03em;
+    min-height:16px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:28px 24px 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    max-width:760px;
+    margin:0 auto;
+    position:relative;
+    z-index:1;
+  }
+  .footer-brand{
+    display:flex; align-items:baseline; gap:8px;
+    font-family:'Space Grotesk',sans-serif;
+    letter-spacing:.14em;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .footer-brand span{
+    font-family:'Inter',sans-serif;
+    letter-spacing:0;
+    font-size:12px;
+    color:var(--blue-soft);
+  }
+  .footer-tags{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:10.5px;
+    letter-spacing:.14em;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+  .footer-tags b{color:var(--blue-soft); margin:0 6px; font-weight:400;}
+
+  @media (max-width:600px){
+    .cover{padding:44px 18px 56px;}
+    .section-inner{padding:30px 20px 24px;}
+    .section-tab{position:static; margin-bottom:10px;}
+    .section h2{padding-right:0;}
+    main{padding:36px 14px 100px;}
+    footer{flex-direction:column; text-align:center;}
+  }
+
+  button:disabled{opacity:.6;cursor:not-allowed;}
+  .success-box{display:none;margin-top:20px;padding:16px;border:1px solid rgba(59,107,255,.5);background:rgba(59,107,255,.1);border-radius:6px;color:var(--ink);}
+  .success-box.show{display:block;}
+
+  @media (max-width:600px){
+    input[type=text], textarea{font-size:16px;}
+    .choices{flex-direction:column;}
+    .choice span{width:100%;justify-content:center;}
+    .btn-row{flex-direction:column;}
+    .btn-row button{width:100%;}
+    .progress-wrap{padding:10px 14px;}
+    .progress-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  }
+
+  @media print{
+    .progress-wrap, .finish{display:none;}
+    body{background:#fff; color:#111;}
+    .section{border:1px solid #ccc; break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <svg class="bolt bolt-big" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/>
+  </svg>
+  <div class="cover-eyebrow">Dantz Co. · Confidencial</div>
+  <h1>Diagnóstico Estratégico<br>de Marca</h1>
+  <p>Antes de desenharmos a estratégia da sua marca, precisamos entender profundamente o seu negócio. Responda com calma e sinceridade — quanto mais detalhes, mais precisa será a estratégia.</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div>Seções<strong>11</strong></div>
+    <div>Tempo estimado<strong>20–30 min</strong></div>
+    <div>Status<strong id="statusPct">0% preenchido</strong></div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel">Seção 01 de 11 · Sobre a empresa</div>
+</div>
+
+<main>
+  <form id="brandForm" action="https://formspree.io/f/mbdnbadv" method="POST">
+
+    <!-- 1 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>01 / 11</div>
+      <div class="section-inner">
+        <h2>Sobre a empresa</h2>
+        <p class="section-sub">O ponto de partida de qualquer estratégia é a origem.</p>
+
+        <div class="field">
+          <label for="nomeEmpresa">Nome da empresa</label>
+          <input type="text" id="nomeEmpresa" placeholder="Ex.: Estúdio Amora">
+        </div>
+        <div class="field">
+          <label for="origemIdeia">Como surgiu a ideia da empresa?</label>
+          <textarea id="origemIdeia" placeholder="Conte o momento, a motivação, o problema que percebeu..."></textarea>
+        </div>
+        <div class="field">
+          <label for="historia">Conte a história da empresa</label>
+          <textarea id="historia" placeholder="Marcos importantes, mudanças de rumo, conquistas..."></textarea>
+        </div>
+        <div class="field">
+          <label for="missao">Qual é a missão da empresa?</label>
+          <textarea id="missao" placeholder="Por que a empresa existe, além de lucrar?"></textarea>
+        </div>
+        <div class="field">
+          <label for="visao5anos">Qual visão você tem para os próximos 5 anos?</label>
+          <textarea id="visao5anos" placeholder="Onde a empresa estará, o que terá conquistado..."></textarea>
+        </div>
+        <div class="field">
+          <label for="valores">Quais são os principais valores da empresa?</label>
+          <textarea id="valores" placeholder="Princípios que guiam decisões e comportamentos"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>02 / 11</div>
+      <div class="section-inner">
+        <h2>Produtos e serviços</h2>
+        <p class="section-sub">O que, de fato, sustenta o negócio.</p>
+
+        <div class="field">
+          <label for="oQueVende">O que a empresa vende?</label>
+          <textarea id="oQueVende" placeholder="Liste produtos e/ou serviços principais"></textarea>
+        </div>
+        <div class="field">
+          <label for="maisLucro">Quais produtos ou serviços geram mais lucro?</label>
+          <textarea id="maisLucro"></textarea>
+        </div>
+        <div class="field">
+          <label for="carroChefe">Existe algum produto carro-chefe?</label>
+          <textarea id="carroChefe"></textarea>
+        </div>
+        <div class="field">
+          <label for="lancamentos">Há produtos que pretende lançar futuramente?</label>
+          <textarea id="lancamentos"></textarea>
+        </div>
+        <div class="field">
+          <label for="diferenciais">Quais diferenciais seus produtos possuem?</label>
+          <textarea id="diferenciais" placeholder="O que ninguém mais oferece do mesmo jeito"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>03 / 11</div>
+      <div class="section-inner">
+        <h2>Objetivos</h2>
+        <p class="section-sub">Para onde a estratégia precisa apontar.</p>
+
+        <div class="field">
+          <label>Qual é o principal objetivo da empresa hoje?</label>
+          <div class="choices" id="objetivoChoices">
+            <label class="choice"><input type="radio" name="objetivo" value="Ganhar reconhecimento"><span>Ganhar reconhecimento</span></label>
+            <label class="choice"><input type="radio" name="objetivo" value="Conseguir clientes recorrentes"><span>Conseguir clientes recorrentes</span></label>
+            <label class="choice"><input type="radio" name="objetivo" value="Expandir"><span>Expandir</span></label>
+            <label class="choice"><input type="radio" name="objetivo" value="Tornar-se referência"><span>Tornar-se referência</span></label>
+            <label class="choice"><input type="radio" name="objetivo" value="Outro"><span>Outro</span></label>
+          </div>
+          <div class="other-input" id="objetivoOutroWrap">
+            <input type="text" id="objetivoOutro" placeholder="Qual?">
+          </div>
+        </div>
+        <div class="field">
+          <label for="ondeChegar">Onde você quer chegar com essa empresa?</label>
+          <textarea id="ondeChegar"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>04 / 11</div>
+      <div class="section-inner">
+        <h2>Público-alvo</h2>
+        <p class="section-sub">Quem a marca precisa conquistar.</p>
+
+        <div class="field">
+          <label for="clienteIdeal">Quem é seu cliente ideal?</label>
+          <textarea id="clienteIdeal" placeholder="Perfil, idade, estilo de vida, dores..."></textarea>
+        </div>
+        <div class="field">
+          <label for="oQueBusca">O que ele busca quando compra esse tipo de produto?</label>
+          <textarea id="oQueBusca"></textarea>
+        </div>
+        <div class="field">
+          <label for="porqueEscolhe">O que faz ele escolher uma empresa ao invés da outra?</label>
+          <textarea id="porqueEscolhe"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>05 / 11</div>
+      <div class="section-inner">
+        <h2>Concorrência</h2>
+        <p class="section-sub">O cenário em que a marca vai disputar espaço.</p>
+
+        <div class="field">
+          <label for="concorrentes">Quem são seus principais concorrentes?</label>
+          <textarea id="concorrentes"></textarea>
+        </div>
+        <div class="field">
+          <label for="inspiracao">Existe alguma marca que você gostaria de usar como inspiração?</label>
+          <p class="hint">Pode ser até de outro segmento.</p>
+          <textarea id="inspiracao"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>06 / 11</div>
+      <div class="section-inner">
+        <h2>Posicionamento</h2>
+        <p class="section-sub">A personalidade por trás da marca.</p>
+
+        <div class="field">
+          <label for="marcaPessoa">Se sua empresa fosse uma pessoa, como ela seria?</label>
+          <textarea id="marcaPessoa" placeholder="Idade, jeito de falar, estilo, personalidade..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>07 / 11</div>
+      <div class="section-inner">
+        <h2>Identidade visual</h2>
+        <p class="section-sub">O que já existe — e o que ainda precisa nascer.</p>
+
+        <div class="field">
+          <label>Você já possui:</label>
+          <div class="choices" id="identidadeChoices">
+            <label class="choice"><input type="checkbox" name="identidade" value="Logo"><span>Logo</span></label>
+            <label class="choice"><input type="checkbox" name="identidade" value="Manual de marca"><span>Manual de marca</span></label>
+            <label class="choice"><input type="checkbox" name="identidade" value="Paleta de cores"><span>Paleta de cores</span></label>
+            <label class="choice"><input type="checkbox" name="identidade" value="Tipografia"><span>Tipografia</span></label>
+            <label class="choice"><input type="checkbox" name="identidade" value="Padrão gráfico"><span>Padrão gráfico</span></label>
+            <label class="choice"><input type="checkbox" name="identidade" value="Nada ainda"><span>Nada ainda</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="coresGosta">Quais cores você gosta?</label>
+          <input type="text" id="coresGosta" placeholder="Ex.: azul elétrico, navy, branco">
+        </div>
+        <div class="field">
+          <label for="coresNaoGosta">Quais cores você NÃO gosta?</label>
+          <input type="text" id="coresNaoGosta">
+        </div>
+        <div class="field">
+          <label for="marcaVisualAdmira">Existe alguma marca cujo visual você admira?</label>
+          <textarea id="marcaVisualAdmira"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>08 / 11</div>
+      <div class="section-inner">
+        <h2>Comunicação</h2>
+        <p class="section-sub">Como a marca deve soar e ser lembrada.</p>
+
+        <div class="field">
+          <label for="comoEnxergar">Como você quer que as pessoas enxerguem sua empresa?</label>
+          <textarea id="comoEnxergar"></textarea>
+        </div>
+        <div class="field">
+          <label for="completeFrase">Complete: "Quando alguém pensar na minha empresa, quero que lembre de..."</label>
+          <textarea id="completeFrase"></textarea>
+        </div>
+        <div class="field">
+          <label for="palavrasDefine">Quais palavras definem sua marca?</label>
+          <input type="text" id="palavrasDefine" placeholder="Ex.: acolhedora, ousada, precisa">
+        </div>
+        <div class="field">
+          <label for="naoQuerSer">Como você NÃO quer ser visto?</label>
+          <textarea id="naoQuerSer"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>09 / 11</div>
+      <div class="section-inner">
+        <h2>Atendimento</h2>
+        <p class="section-sub">A experiência real de quem já é cliente.</p>
+
+        <div class="field">
+          <label for="atendimentoHoje">Como funciona seu atendimento hoje?</label>
+          <textarea id="atendimentoHoje"></textarea>
+        </div>
+        <div class="field">
+          <label for="quemAtende">Quem atende?</label>
+          <input type="text" id="quemAtende">
+        </div>
+        <div class="field">
+          <label for="tempoResposta">Quanto tempo demora para responder?</label>
+          <input type="text" id="tempoResposta" placeholder="Ex.: em até 2h úteis">
+        </div>
+        <div class="field">
+          <label for="processoVendas">Existe um processo de vendas?</label>
+          <textarea id="processoVendas"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>10 / 11</div>
+      <div class="section-inner">
+        <h2>Experiência do cliente</h2>
+        <p class="section-sub">A jornada do primeiro contato à entrega.</p>
+
+        <div class="field">
+          <label for="jornadaCliente">Descreva o passo a passo desde o primeiro contato até a entrega</label>
+          <textarea id="jornadaCliente" placeholder="Como o cliente chega até você e o que acontece em cada etapa"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="section" data-section>
+      <div class="section-tab"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>11 / 11</div>
+      <div class="section-inner">
+        <h2>Forças e fraquezas</h2>
+        <p class="section-sub">Um olhar honesto de dentro para fora.</p>
+
+        <div class="field">
+          <label for="pontosFortes">Quais são os pontos fortes da empresa?</label>
+          <textarea id="pontosFortes"></textarea>
+        </div>
+        <div class="field">
+          <label for="pontosFracos">Quais são os pontos fracos?</label>
+          <textarea id="pontosFracos"></textarea>
+        </div>
+        <div class="field">
+          <label for="melhorarUrgente">O que precisa melhorar urgentemente?</label>
+          <textarea id="melhorarUrgente"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="finish">
+      <svg class="bolt" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" fill="#3B6BFF"/></svg>
+      <h2>Pronto para enviar</h2>
+      <p>Revise suas respostas e clique em enviar. As informações serão registradas automaticamente na planilha da Dantz Co.</p>
+      <div class="btn-row">
+        <button type="button" class="btn-secondary" id="copyBtn">Copiar respostas</button>
+        <button type="submit" class="btn-primary" id="submitBtn">Enviar diagnóstico</button>
+      </div>
+      <div class="status-msg" id="statusMsg"></div>
+    </div>
+
+  </form>
+</main>
+
+<footer>
+  <div class="footer-brand">DANTZ <span>Co.</span></div>
+  <div class="footer-tags">STRATEGY <b>•</b> BRANDING <b>•</b> MARKETING</div>
+</footer>
+
+<script>
+(function(){
+  const FORMSPREE_URL = 'https://formspree.io/f/mbdnbadv';
+
+  const form = document.getElementById('brandForm');
+  const sections = Array.from(document.querySelectorAll('[data-section]'));
+  const progressFill = document.getElementById('progressFill');
+  const progressLabel = document.getElementById('progressLabel');
+  const statusPct = document.getElementById('statusPct');
+  const statusMsg = document.getElementById('statusMsg');
+  const submitBtn = document.getElementById('submitBtn');
+  const sectionTitles = sections.map(s => s.querySelector('h2').textContent);
+
+  const objetivoRadios = document.querySelectorAll('input[name="objetivo"]');
+  const objetivoOutroWrap = document.getElementById('objetivoOutroWrap');
+  objetivoRadios.forEach(r => r.addEventListener('change', () => {
+    const selected = document.querySelector('input[name="objetivo"]:checked');
+    objetivoOutroWrap.classList.toggle('show', selected && selected.value === 'Outro');
+  }));
+
+  function allFields(){
+    return Array.from(form.querySelectorAll('input[type=text], textarea'));
+  }
+
+  function getCompletion(){
+    const fields = allFields();
+    const filled = fields.filter(f => f.value.trim().length > 0).length;
+    const objective = document.querySelector('input[name="objetivo"]:checked') ? 1 : 0;
+    const identity = document.querySelectorAll('input[name="identidade"]:checked').length ? 1 : 0;
+    return Math.round(((filled + objective + identity) / (fields.length + 2)) * 100);
+  }
+
+  function updateProgress(){
+    const pct = getCompletion();
+    progressFill.style.width = pct + '%';
+    statusPct.textContent = pct + '% preenchido';
+    let current = 0;
+    const scrollPos = window.scrollY + 140;
+    sections.forEach((section, index) => {
+      if (section.offsetTop <= scrollPos) current = index;
+    });
+    progressLabel.textContent = 'Seção ' + String(current + 1).padStart(2,'0') + ' de 11 · ' + sectionTitles[current];
+  }
+
+  form.addEventListener('input', updateProgress);
+  form.addEventListener('change', updateProgress);
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+
+  const fieldLabels = {
+    nomeEmpresa:'Nome da empresa', origemIdeia:'Como surgiu a ideia', historia:'História da empresa',
+    missao:'Missão', visao5anos:'Visão para 5 anos', valores:'Valores', oQueVende:'O que vende',
+    maisLucro:'Produtos/serviços mais lucrativos', carroChefe:'Produto carro-chefe',
+    lancamentos:'Lançamentos futuros', diferenciais:'Diferenciais', objetivoOutro:'Objetivo — outro',
+    ondeChegar:'Onde quer chegar', clienteIdeal:'Cliente ideal', oQueBusca:'O que o cliente busca',
+    porqueEscolhe:'Por que escolhe a empresa', concorrentes:'Concorrentes', inspiracao:'Marca de inspiração',
+    marcaPessoa:'Marca como pessoa', coresGosta:'Cores que gosta', coresNaoGosta:'Cores que não gosta',
+    marcaVisualAdmira:'Marca visual admirada', comoEnxergar:'Como quer ser enxergada',
+    completeFrase:'Lembrança desejada', palavrasDefine:'Palavras que definem a marca', naoQuerSer:'Como não quer ser vista',
+    atendimentoHoje:'Atendimento atual', quemAtende:'Quem atende', tempoResposta:'Tempo de resposta',
+    processoVendas:'Processo de vendas', jornadaCliente:'Jornada do cliente', pontosFortes:'Pontos fortes',
+    pontosFracos:'Pontos fracos', melhorarUrgente:'Melhoria urgente'
+  };
+
+  function collectData(){
+    const data = {
+      dataEnvio: new Date().toLocaleString('pt-BR'),
+      paginaOrigem: window.location.href,
+      dispositivo: /Mobi|Android/i.test(navigator.userAgent) ? 'Celular/Tablet' : 'Computador'
+    };
+    allFields().forEach(field => data[fieldLabels[field.id] || field.id] = field.value.trim());
+    const objetivo = document.querySelector('input[name="objetivo"]:checked');
+    data['Objetivo principal'] = objetivo ? objetivo.value : '';
+    data['Itens de identidade visual'] = Array.from(document.querySelectorAll('input[name="identidade"]:checked')).map(i => i.value).join(', ');
+    return data;
+  }
+
+  function buildReport(){
+    const data = collectData();
+    const lines = ['DANTZ CO. — DIAGNÓSTICO ESTRATÉGICO DE MARCA', ''];
+    Object.entries(data).forEach(([key,value]) => lines.push(key + ': ' + (value || '—')));
+    return lines.join('\n');
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!document.getElementById('nomeEmpresa').value.trim()) {
+      statusMsg.textContent = 'Preencha pelo menos o nome da empresa antes de enviar.';
+      document.getElementById('nomeEmpresa').focus();
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+    statusMsg.textContent = 'Enviando suas respostas com segurança...';
+
+    try {
+      const body = new FormData();
+      Object.entries(collectData()).forEach(([key,value]) => body.append(key, value));
+      body.append('_subject', 'Novo Diagnóstico Estratégico de Marca — DANTZ Co.');
+
+      const response = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        body,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha no envio: ' + response.status);
+      }
+
+      statusMsg.textContent = 'Diagnóstico enviado com sucesso. Obrigado!';
+      submitBtn.textContent = 'Enviado ✓';
+      localStorage.removeItem('dantzBrandForm');
+      form.reset();
+      updateProgress();
+    } catch (error) {
+      statusMsg.textContent = 'Não foi possível enviar agora. Verifique sua internet e tente novamente.';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar diagnóstico';
+    }
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(buildReport());
+      statusMsg.textContent = 'Respostas copiadas para a área de transferência.';
+    } catch(error) {
+      statusMsg.textContent = 'Não foi possível copiar automaticamente.';
+    }
+  });
+
+  function saveDraft(){
+    const values = {};
+    allFields().forEach(field => values[field.id] = field.value);
+    values.objetivo = document.querySelector('input[name="objetivo"]:checked')?.value || '';
+    values.identidade = Array.from(document.querySelectorAll('input[name="identidade"]:checked')).map(i => i.value);
+    localStorage.setItem('dantzBrandForm', JSON.stringify(values));
+  }
+
+  function restoreDraft(){
+    try {
+      const values = JSON.parse(localStorage.getItem('dantzBrandForm') || '{}');
+      allFields().forEach(field => { if (values[field.id] !== undefined) field.value = values[field.id]; });
+      if (values.objetivo) document.querySelector(`input[name="objetivo"][value="${CSS.escape(values.objetivo)}"]`)?.click();
+      (values.identidade || []).forEach(value => document.querySelector(`input[name="identidade"][value="${CSS.escape(value)}"]`)?.click());
+    } catch(error) {}
+    updateProgress();
+  }
+
+  form.addEventListener('input', saveDraft);
+  form.addEventListener('change', saveDraft);
+  restoreDraft();
+})();
+</script>
+
+</body>
+</html>
